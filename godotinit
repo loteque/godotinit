@@ -1,0 +1,54 @@
+#godotinit
+## initialize a godot project and initialize a git repo
+#! /usr/bin/sh
+
+# default godot version
+ver="3"
+
+# default porject environment to no; for safety
+isProjEnv="n"
+
+# localization
+yExpr=$(locale yesexpr) 
+
+init_proj () {
+    #create project file
+    touch project.godot
+
+    #if version is 4.x then echo configs to project file.
+    if [ $ver -eq "4" ]
+    then
+        echo -e "config_version=5 \n \n[application] \n \nconfig/features=PackedStringArray(\"4.2\")" >> project.godot
+    fi
+
+    #initialize git
+    git init
+}
+
+# confirm directory
+echo "Are you in your new project directory? "
+
+# ask for version
+printf 'Are you initializing a godot 4 project (y/n)? \n'
+old_stty_cfg=$(stty -g)
+stty raw -echo ; answer=$(head -c 1) ; stty $old_stty_cfg # Careful playing with stty
+if [ "$answer" != "${answer#${yExpr#^}}" ];then
+    ver="4"
+fi
+
+# confirm project directory and run initialization
+printf 'Are you in your new project directory? (y/n)? \n'
+old_stty_cfg=$(stty -g)
+stty raw -echo ; answer=$(head -c 1) ; stty $old_stty_cfg # Careful playing with stty
+if [ "$answer" != "${answer#${yExpr#^}}" ];then
+    isProjEnv="y"
+else
+    echo "please navigate to your project directory"
+fi
+
+if [ $isProjEnv == "y" ];then
+    init_proj;
+    ls -Alph --group-directories-first --sort=extension --color=auto
+fi
+
+
