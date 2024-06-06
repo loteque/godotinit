@@ -21,9 +21,10 @@ _[read the source](https://github.com/loteque/godotinit/blob/main/godotinit)_
 ```
 wget -O ~/.local/bin/godotinit https://raw.githubusercontent.com/loteque/godotinit/main/godotinit
 ```
-mac or nix:
+mac or *nix:
 ```
 chmod +x ~/.local/bin/godotinit
 ```
 gitbash:
+
 _it should run without a permission change_
